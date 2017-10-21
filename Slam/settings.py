@@ -22,6 +22,29 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '*9o6+rdu-7*kq!cjfa)tuzam61miy#b#=&y7d-z#-0p)0^%z)s'
 
+LOGIN_REDIRECT_URL = '/auth'
+LOGIN_URL          = '/profile/select/'
+LOGIN_ERROR_URL    = '/profile/select/'
+
+
+SOCIAL_AUTH_TWITTER_KEY         = ''
+SOCIAL_AUTH_TWITTER_SECRET      = ''
+
+SOCIAL_AUTH_FACEBOOK_KEY        = ''
+SOCIAL_AUTH_FACEBOOK_SECRET     = ''
+SOCIAL_AUTH_FACEBOOK_SCOPE      = ['public_profile', 'email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {'fields': 'first_name,last_name,gender,picture,link'}
+
+SOCIAL_AUTH_GOOGLE_OAUTH_SCOPE  = ['https://www.googleapis.com/auth/userinfo.profile',]
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '583868431865-qtvc1pi8tmrlmodto7cos4oqqp8th5tr.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'Jp57w7YSixPfVynCqiFxy_1_'
+GOOGLE_OAUTH2_EXTRA_DATA = [ ('id', 'id'),
+                             ('email', 'email'),
+                             ( 'username', 'username'),  ]
+
+
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -36,10 +59,44 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'social.apps.django_app.default',
+#    'social_django',
     'django.contrib.staticfiles',
-]
+    'Slamapp',
+    'HomeView',
+    'ProfileView',
 
-MIDDLEWARE = [
+]
+TEMPLATE_CONTEXT_PROCESSORS = (
+   'django.contrib.auth.context_processors.auth',
+   'django.core.context_processors.debug',
+   'django.core.context_processors.i18n',
+   'django.core.context_processors.media',
+   'django.core.context_processors.static',
+   'django.core.context_processors.tz',
+   'django.contrib.messages.context_processors.messages',
+   'social.apps.django_app.context_processors.backends',
+   'social.apps.django_app.context_processors.login_redirect',
+)
+
+SOCIAL_AUTH_PIPELINE = (
+'social_auth.backends.pipeline.social.social_auth_user',
+'social_auth.backends.pipeline.associate.associate_by_email',
+'social_auth.backends.pipeline.user.get_username',
+'social_auth.backends.pipeline.user.create_user',
+'social_auth.backends.pipeline.social.associate_user',
+'social_auth.backends.pipeline.user.update_user_details',
+'auth_pipelines.pipelines.get_user_avatar',
+)
+
+AUTHENTICATION_BACKENDS = (
+   'social.backends.facebook.FacebookOAuth2',
+   'social.backends.google.GoogleOAuth2',
+   'social.backends.twitter.TwitterOAuth',
+   'django.contrib.auth.backends.ModelBackend',
+)
+
+MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,7 +111,7 @@ ROOT_URLCONF = 'Slam.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -62,7 +119,17 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 'django.contrib.auth.context_processors.auth',
+                # 'django.core.context_processors.debug',
+                # 'django.core.context_processors.i18n',
+                # 'django.core.context_processors.media',
+                # 'django.core.context_processors.static',
+                # 'django.core.context_processors.tz',
+                # 'django.contrib.messages.context_processors.messages',
+                # 'social.apps.django_app.context_processors.backends',
+                # 'social.apps.django_app.context_processors.login_redirect',
             ],
+            'debug' : DEBUG,
         },
     },
 ]
@@ -86,6 +153,20 @@ DATABASES = {
     }
 }
 
+# FEATURES: {
+#         "AUTH_USE_OPENID_PROVIDER": true,
+#         "AUTOMATIC_AUTH_FOR_TESTING": false,
+#         "CERTIFICATES_ENABLED": true,
+#         "ENABLE_DISCUSSION_SERVICE": true,
+#         "ENABLE_INSTRUCTOR_ANALYTICS": false,
+#         "ENABLE_MKTG_SITE": false,
+#         "ENABLE_S3_GRADE_DOWNLOADS": true,
+#         "ENABLE_THIRD_PARTY_AUTH": true,
+#         "PREVIEW_LMS_BASE": "portal.edu4africa.com",
+#         "SUBDOMAIN_BRANDING": false,
+#         "SUBDOMAIN_COURSE_LISTINGS": false,
+#         "USE_CUSTOM_THEME": true
+#     },
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -124,4 +205,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
