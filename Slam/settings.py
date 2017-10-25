@@ -68,17 +68,18 @@ INSTALLED_APPS = [
     'ProfileView',
 
 ]
-TEMPLATE_CONTEXT_PROCESSORS = (
-   'django.contrib.auth.context_processors.auth',
-   'django.core.context_processors.debug',
-   'django.core.context_processors.i18n',
-   'django.core.context_processors.media',
-   'django.core.context_processors.static',
-   'django.core.context_processors.tz',
-   'django.contrib.messages.context_processors.messages',
-   'social.apps.django_app.context_processors.backends',
-   'social.apps.django_app.context_processors.login_redirect',
-)
+# TEMPLATE_CONTEXT_PROCESSORS = (
+#    'django.contrib.auth.context_processors.auth',
+#    'django.core.context_processors.debug',
+#    'django.core.context_processors.csrf',
+#    'django.core.context_processors.i18n',
+#    'django.core.context_processors.media',
+#    'django.core.context_processors.static',
+#    'django.core.context_processors.tz',
+#    'django.contrib.messages.context_processors.messages',
+#    'social.apps.django_app.context_processors.backends',
+#    'social.apps.django_app.context_processors.login_redirect',
+# )
 
 SOCIAL_AUTH_PIPELINE = (
 
@@ -110,6 +111,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'Slam.urls'
@@ -125,6 +127,17 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.csrf',
+                'django.contrib.auth.context_processors.auth',
+                'django.core.context_processors.debug',
+                'django.core.context_processors.csrf',
+               'django.core.context_processors.i18n',
+                'django.core.context_processors.media',
+               'django.core.context_processors.static',
+               'django.core.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.backends',
+               'social.apps.django_app.context_processors.login_redirect',
                 # 'django.contrib.auth.context_processors.auth',
                 # 'django.core.context_processors.debug',
                 # 'django.core.context_processors.i18n',

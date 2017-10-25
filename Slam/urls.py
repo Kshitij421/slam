@@ -33,7 +33,6 @@ urlpatterns = [
     url(r'^profile/', include("ProfileView.urls")),
     url(r'^auth/', include('social.apps.django_app.urls', namespace='social')),
     url(r'^auth/', include('django.contrib.auth.urls', namespace='auth')),
-    url(r'^logout/', include("HomeView.urls")),
-    url(r'^$', include("HomeView.urls")),
+    url(r'^', include("HomeView.urls")),
 ]
 	

@@ -30,6 +30,6 @@ urlpatterns = [
 #     url(r'^blog/', include("blog.urls")),
 #     url(r'^admin/', admin.site.urls)
 	url(r'^logout/', home_views.logout_view),
-	#url(r'^logout/', home_views.logout),
-    url(r'^$', home_views.home_view),
+	url(r'^login/', home_views.login_view),
+    url(r'^', home_views.home_view),
 ]
