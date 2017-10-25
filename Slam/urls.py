@@ -31,8 +31,9 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^posts/', include("Slamapp.urls")),
     url(r'^profile/', include("ProfileView.urls")),
-    url('^auth/', include('social.apps.django_app.urls', namespace='social')),
-    url('^auth/', include('django.contrib.auth.urls', namespace='auth')),
+    url(r'^auth/', include('social.apps.django_app.urls', namespace='social')),
+    url(r'^auth/', include('django.contrib.auth.urls', namespace='auth')),
+    url(r'^logout/', include("HomeView.urls")),
     url(r'^$', include("HomeView.urls")),
 ]
 	

@@ -25,14 +25,20 @@ get_profile_photo_path = PathAndRename("profile_photoes")
 get_post_photo_path = PathAndRename("posts")
 
 class Profile(models.Model):
+	GENDER_CHOICES = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('O', 'Other'),
+    )
 	user = models.ForeignKey(User)
 	username = models.CharField(max_length=15)
+	gender = models.CharField(max_length=1, default='M', choices=GENDER_CHOICES)
 	email = models.EmailField(primary_key=True)
-	profile_link = models.SlugField(unique=True, max_length=255)
+	profile_link = models.SlugField(unique=False, max_length=255)
 	profile_image = models.ImageField(upload_to=get_profile_photo_path, blank=True, null=True)
-	birth_date = models.DateTimeField()
-	insta_profile = models.SlugField(unique=True, max_length=255)
-	facebook_profile = models.SlugField(unique=True, max_length=255)
+	birth_date = models.DateTimeField(null=True, blank=True)
+	insta_profile = models.SlugField(unique=False, max_length=255)
+	facebook_profile = models.SlugField(unique=False, max_length=255)
 
 
 class Post(models.Model):

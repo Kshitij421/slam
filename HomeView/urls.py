@@ -29,7 +29,7 @@ urlpatterns = [
 #     url(r'^article/(?P<slug>[\w-]+)/$', article_detail, name='about'),
 #     url(r'^blog/', include("blog.urls")),
 #     url(r'^admin/', admin.site.urls)
-	url(r'^logout/', lambda request: logout_then_login(request, "/"), name='logout'),
+	url(r'^logout/', home_views.logout_view),
 	#url(r'^logout/', home_views.logout),
     url(r'^$', home_views.home_view),
 ]

@@ -30,8 +30,8 @@ LOGIN_ERROR_URL    = '/profile/select/'
 SOCIAL_AUTH_TWITTER_KEY         = ''
 SOCIAL_AUTH_TWITTER_SECRET      = ''
 
-SOCIAL_AUTH_FACEBOOK_KEY        = ''
-SOCIAL_AUTH_FACEBOOK_SECRET     = ''
+SOCIAL_AUTH_FACEBOOK_KEY        = '136149443801150'
+SOCIAL_AUTH_FACEBOOK_SECRET     = '79b6ed60878e579232727fd61e4be9e1'
 SOCIAL_AUTH_FACEBOOK_SCOPE      = ['public_profile', 'email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {'fields': 'first_name,last_name,gender,picture,link'}
 
@@ -40,7 +40,8 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '583868431865-qtvc1pi8tmrlmodto7cos4oqqp8th5tr.a
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'Jp57w7YSixPfVynCqiFxy_1_'
 GOOGLE_OAUTH2_EXTRA_DATA = [ ('id', 'id'),
                              ('email', 'email'),
-                             ( 'username', 'username'),  ]
+                             ('username', 'username'), 
+                             ('birthday', 'birthday'), ]
 
 
 
@@ -60,7 +61,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'social.apps.django_app.default',
-#    'social_django',
+    'social_django',
     'django.contrib.staticfiles',
     'Slamapp',
     'HomeView',
@@ -80,13 +81,18 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 SOCIAL_AUTH_PIPELINE = (
-'social_auth.backends.pipeline.social.social_auth_user',
-'social_auth.backends.pipeline.associate.associate_by_email',
-'social_auth.backends.pipeline.user.get_username',
-'social_auth.backends.pipeline.user.create_user',
-'social_auth.backends.pipeline.social.associate_user',
-'social_auth.backends.pipeline.user.update_user_details',
-'auth_pipelines.pipelines.get_user_avatar',
+
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details',
+    'ProfileView.pipeline.socialprofile_extra_values', # This is a path of your pipeline.py
+    #and get_avatar is the function.
 )
 
 AUTHENTICATION_BACKENDS = (
