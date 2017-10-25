@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+# import dj_database_url
+
+
+# DATABASES['default'] = dj_database_url.config() 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -49,7 +53,7 @@ GOOGLE_OAUTH2_EXTRA_DATA = [ ('id', 'id'),
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -159,18 +163,43 @@ WSGI_APPLICATION = 'Slam.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+
+
+try:
+    from urllib.parse import urlparse
+except ImportError:
+     from urlparse import urlparse
+url = urlparse(
+        os.environ.get(
+            'DATABASE_URL',
+            'mysql://admin:RPHBNYDTIZBVMWFV@sl-us-south-1-portal.10.dblayer.com:25658/compose'
+            )
+        )
+import json
+MYSQL = json.loads(os.environ['VCAP_SERVICES'])['cleardb'][0]['credentials']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': '/etc/mysql/my.cnf',
-        },
-    },
-    'sqlite': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': MYSQL['name'],
+        'USER': MYSQL['username'],
+        'PASSWORD': MYSQL['password'],
+        'HOST': MYSQL['hostname'],
+        'PORT': MYSQL['port']
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'OPTIONS': {
+#             'read_default_file': '/etc/mysql/my.cnf',
+#         },
+#     },
+#     'sqlite': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 # FEATURES: {
 #         "AUTH_USE_OPENID_PROVIDER": true,
