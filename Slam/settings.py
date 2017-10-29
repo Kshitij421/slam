@@ -188,6 +188,7 @@ DATABASES = {
         # 'HOST': MYSQL['hostname'],
         # 'PORT': MYSQL['port']
         'uri' : MYSQL['uri'].encode('utf8')
+
     }
 }
 
