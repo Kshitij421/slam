@@ -17,6 +17,42 @@ def logout(request):
     auth.logout(request)
     return render(request, "HomeView/index.html", {})
 
+def signup_view(request):
+	print("Inside SignUp !!!")
+	if request.POST:
+		username = request.POST["username"]
+		email = request.POST["email"]
+		password = request.POST["password"]
+
+		Profile.objects.filter(username__exact = username)
+
+	
+	return render(request, "HomeView/index.html", context_instance=context)
+
+
+def signup_view(request):
+	print("Inside SignUp View !!!")
+		# user = form.save(commit=False)
+  #   	user.is_active = False
+  #   	user.save()
+  #     	current_site = get_current_site(request)
+  #      	mail_subject = 'Activate your blog account.'
+  #      	message = render_to_string('acc_active_email.html', {
+  #               'user': user,
+  #               'domain': current_site.domain,
+  #               'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+  #               'token':account_activation_token.make_token(user),
+  #           })
+  #           to_email = form.cleaned_data.get('email')
+  #           email = EmailMessage(
+  #                       mail_subject, message, to=[to_email]
+  #           )
+  #           email.send()
+  #           return HttpResponse('Please confirm your email address to complete the registration')
+
+
+def activate_view(request):
+	print(" Inside Activate View")
 
 def login_view(request):
 	print("Inside Login View")
@@ -65,3 +101,5 @@ def logout_view(request):
                          'username': username})
 	return HttpResponseRedirect('/')
 	return render(request, "HomeView/index.html", context_instance=context)
+
+

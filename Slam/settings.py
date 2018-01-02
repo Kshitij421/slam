@@ -46,6 +46,13 @@ GOOGLE_OAUTH2_EXTRA_DATA = [ ('id', 'id'),
 
 
 
+# Email Credentials
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'kshitijwarungase@gmail.com'
+EMAIL_HOST_PASSWORD = 'Kshitij@421'
+EMAIL_PORT = 587
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 

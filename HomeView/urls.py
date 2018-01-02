@@ -31,5 +31,8 @@ urlpatterns = [
 #     url(r'^admin/', admin.site.urls)
 	url(r'^logout/', home_views.logout_view),
 	url(r'^login/', home_views.login_view),
+    url(r'^signup/', home_views.signup_view),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        home_views.activate_view),
     url(r'^', home_views.home_view),
 ]
